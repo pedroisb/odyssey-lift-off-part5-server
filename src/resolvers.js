@@ -1,4 +1,5 @@
 const resolvers = {
+  
   Query: {
     // returns an array of Tracks that will be used to populate the homepage grid of our web client
     tracksForHome: (_, __, { dataSources }) => {
@@ -15,6 +16,7 @@ const resolvers = {
       return dataSources.trackAPI.getModule(id);
     },
   },
+  
   Mutation: {
     // increments a track's numberOfViews property
     incrementTrackViews: async (_, { id }, { dataSources }) => {
@@ -36,6 +38,7 @@ const resolvers = {
       }
     },
   },
+  
   Track: {
     author: ({ authorId }, _, { dataSources }) => {
       return dataSources.trackAPI.getAuthor(authorId);
@@ -44,7 +47,13 @@ const resolvers = {
     modules: ({ id }, _, { dataSources }) => {
       return dataSources.trackAPI.getTrackModules(id);
     },
+
+    durationInSeconds: ({ length }) => length,
   },
+  
+  Module: {
+    durationInSeconds: ({ length }) => length,
+  }
 };
 
 module.exports = resolvers;
